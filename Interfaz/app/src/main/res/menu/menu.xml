@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main" >
+    <item android:id="@+id/op1"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Ir a otro menú"
+        android:orderInCategory="1"/>
+    <item android:id="@+id/op2"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Mostrar una imagen"
+        android:orderInCategory="2"/>
+</menu>

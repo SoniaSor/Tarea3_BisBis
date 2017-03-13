@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/boton1Menu"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="Capturar foto"
+        android:showAsAction="ifRoom"
+        tools:context="com.example.manu.variasactivities.MainActivity"/>
+    <item android:id="@+id/boton2Menu"
+        android:title="Acceder a Galería"
+        android:showAsAction="ifRoom"
+        />
+</menu>
