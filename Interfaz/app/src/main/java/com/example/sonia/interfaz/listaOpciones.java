@@ -19,7 +19,7 @@ public class listaOpciones extends AppCompatActivity {
         setContentView(R.layout.activity_lista_opciones);
 
 //============================================ SPINNER ============================================
-//Lista de opciones creada mediante spinner
+    //Lista de opciones creada mediante spinner
         Spinner spinner = (Spinner) findViewById (R.id.spinner);
         String[] valores = {"Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"};
         spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,valores));
