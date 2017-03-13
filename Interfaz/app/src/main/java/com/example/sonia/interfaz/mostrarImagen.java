@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.sonia.interfaz.R.id.foto;
+
 public class mostrarImagen extends AppCompatActivity {
 
     Button abrir_foto;
@@ -34,7 +36,7 @@ public class mostrarImagen extends AppCompatActivity {
         setContentView(R.layout.activity_mostrar_imagen);
 
         //Enlazamos el imageView creado en xml con imagen
-        imagen=(ImageView)findViewById(R.id.foto);
+        imagen=(ImageView)findViewById(foto);
         abrir_foto=(Button)findViewById(R.id.abrir_foto);
         fer_foto=(Button)findViewById(R.id.fer_foto);
 
@@ -50,7 +52,7 @@ public class mostrarImagen extends AppCompatActivity {
         fer_foto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                hacerFoto(v);
+                ferFoto(v);
             }//final onClick
         });//final setOnClickListener
     }//final onCreate
@@ -64,6 +66,16 @@ public class mostrarImagen extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"),ELEGIR_FOTO);
     }//final buscarImagen
 
+    public void ferFoto (View v){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri foto_save = null;
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(takePictureIntent,FOTO_CAMARA);
+        }//final if
+    }
+    public void posarFotoCamera(View v){
+
+    }
 //======================= HACER FOTO ===============================================================
     public void hacerFoto (View v){
         Intent intent = new Intent();
@@ -107,12 +119,14 @@ public class mostrarImagen extends AppCompatActivity {
         if (requestCode == ELEGIR_FOTO && resultCode == RESULT_OK && respuesta !=null){
             //Intent de elegir una imagen
             ruta = respuesta.getData(); //obtenemos la ruta del intent
-        }else if (requestCode == FOTO_CAMARA && resultCode == RESULT_OK){
+        }//final if
+        if (requestCode == FOTO_CAMARA && resultCode == RESULT_OK){
             //Intent de Hacer Foto
+            Bundle extras = respuesta.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imagen.setImageBitmap(imageBitmap);
             ruta = fileUri; //Obtenemos la ruta del fichero que hemos creado antes de activar el Intent
-        }else { //Si no es ninguno de los anteriores
-            Log.d("Sonia","Algo no ha ido bien al recibir los Intents");
-        }//final if/else
+        }//final if
         //Comprobamos que la ruta tenga un Uri
         if (ruta != null) {
             Toast.makeText(this, "Tengo la imagen: " + ruta, Toast.LENGTH_LONG).show();
@@ -143,17 +157,12 @@ public class mostrarImagen extends AppCompatActivity {
     private void ponerImagenRuta (Uri ruta, ImageView i){
         try{
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),ruta);
-            ponerImagenBitmap(bitmap,i);
+            //Modificamos el ImageView para que muestre la imagen que obtenemos del Bitmap
+            i.setImageBitmap(bitmap);
         }catch (IOException ex){
             Toast.makeText(this,"Estoy en el catch", Toast.LENGTH_LONG).show();
         }//final try/catch
     }//final ponerImagenRuta
-
-//=================================== PONER IMAGEN (BITMAP) ========================================
-    //Modificamos el ImageView para que muestre la imagen que obtenemos del Bitmap
-    private void ponerImagenBitmap (Bitmap b, ImageView i){
-        i.setImageBitmap(b);
-    }//final ponerImagenBitmap
 
 //=============================START ACTIVITY FOR RESULT ===========================================
     private void startActiviyForResult(Intent intent, int fotoCamara) {
