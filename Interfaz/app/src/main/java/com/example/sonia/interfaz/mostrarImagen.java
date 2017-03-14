@@ -73,10 +73,7 @@ public class mostrarImagen extends AppCompatActivity {
             startActivityForResult(takePictureIntent,FOTO_CAMARA);
         }//final if
     }
-    public void posarFotoCamera(View v){
 
-    }
-//======================= HACER FOTO ===============================================================
     public void hacerFoto (View v){
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
